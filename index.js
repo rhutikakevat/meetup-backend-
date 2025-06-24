@@ -122,6 +122,31 @@ app.get("/events/tags/:eventTag", async (req, res) => {
   }
 });
 
+// DELETE route
+
+async function deleteEventData (eventId) {
+  try{
+    const deleteEvent = await MeetupEvent.findByIdAndDelete(eventId)
+    return deleteEvent;
+  }catch(error){
+    console.log(error);
+  }
+}
+
+app.delete("/events/id/:eventId", async (req,res)=>{
+  try{
+    const eventData = await deleteEventData(req.params.eventId);
+    
+    if(eventData){
+        res.status(200).json({message:"Event data deleted successfully",event:eventData});
+    }else{
+      res.status(404).json({error:"Event does not found"})
+    }
+  }catch (error){
+    res.status(500).json({error:"Failed to fetch while deleting event."})
+  }
+})
+
 // Server Run on PORT
 const PORT = process.env.PORT || 3000;
 
