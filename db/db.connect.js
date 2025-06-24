@@ -8,8 +8,6 @@ const initializeDatabase = async () =>{
         const connection = await mongoose.connect(mongoUri,{
             useNewUrlParser:true,
             useUnifiedTopology:true,
-            serverSelectionTimeoutMS: 5000, 
-            maxPoolSize: 10,
         });
 
         if(connection){
